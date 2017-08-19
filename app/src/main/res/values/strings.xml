@@ -5,4 +5,5 @@
     <string name="sort_by_song">Sort by song</string>
     <string name="sort_by_artist">Sort by artist</string>
     <string name="sort_by_year">Sort by year</string>
+    <string name="search">Search ...</string>
 </resources>

@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import kotlinx.android.synthetic.main.activity_search.*
 import me.urbanowicz.samuel.tooplooxmusic.R
 import me.urbanowicz.samuel.tooplooxmusic.data.Song
 import me.urbanowicz.samuel.tooplooxmusic.data.local.LocalRepository
@@ -66,7 +68,7 @@ class SearchActivity : AppCompatActivity(), Contract.View {
     }
 
     override fun setProgressbarVisibility(visible: Boolean) {
-        TODO("not implemented")
+        progressbar.visibility = if (visible) View.VISIBLE else View.GONE
     }
 
     override fun displaySongs(songs: List<Song>) {
