@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/action_local_source"
+        android:title="@string/local_source"
+        android:checkable="true"/>
+
+    <item android:id="@+id/action_remote_source"
+        android:title="@string/remote_source"
+        android:checkable="true"/>
+
+    <item android:id="@+id/action_sort_by_name"
+        android:title="@string/sort_by_song" />
+
+    <item android:id="@+id/action_sort_by_artist"
+        android:title="@string/sort_by_artist" />
+
+    <item android:id="@+id/action_sort_by_date"
+        android:title="@string/sort_by_year" />
+
+</menu>

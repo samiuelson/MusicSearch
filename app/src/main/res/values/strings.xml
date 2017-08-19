@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">TooplooxMusic</string>
+    <string name="local_source">Local source</string>
+    <string name="remote_source">Remote source</string>
+    <string name="sort_by_song">Sort by song</string>
+    <string name="sort_by_artist">Sort by artist</string>
+    <string name="sort_by_year">Sort by year</string>
 </resources>
