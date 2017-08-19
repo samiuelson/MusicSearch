@@ -9,24 +9,38 @@ import kotlinx.android.synthetic.main.activity_search.*
 import me.urbanowicz.samuel.tooplooxmusic.R
 import me.urbanowicz.samuel.tooplooxmusic.data.Song
 import me.urbanowicz.samuel.tooplooxmusic.data.local.LocalRepository
+import me.urbanowicz.samuel.tooplooxmusic.data.remote.RemoteRepository
 import me.urbanowicz.samuel.tooplooxmusic.extensions.getAsString
+import me.urbanowicz.samuel.tooplooxmusic.extensions.onTextChanged
+import me.urbanowicz.samuel.tooplooxmusic.task.GetAllSongsTask
 import me.urbanowicz.samuel.tooplooxmusic.task.SearchLocalSongsTask
 
 class SearchActivity : AppCompatActivity(), Contract.View {
 
     private val presenter: Contract.Presenter
+    private val adapter = SongsAdapter()
 
     init {
         val searchLocalTaskLazy: Lazy<SearchLocalSongsTask> = lazy<SearchLocalSongsTask> {
             SearchLocalSongsTask(LocalRepository(assets.getAsString("local_songs.json")))
         }
-        presenter = SearchPresenter(searchLocalTaskLazy)
+        val getAllSongsTaskLazy: Lazy<GetAllSongsTask> = lazy<GetAllSongsTask> {
+            GetAllSongsTask(LocalRepository(assets.getAsString("local_songs.json")), RemoteRepository())
+        }
+        presenter = SearchPresenter(searchLocalTaskLazy, getAllSongsTaskLazy)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_search)
         presenter.onViewAttached(this)
+        setSupportActionBar(toolbar)
+        search_view.onTextChanged { searchQuery ->
+            presenter.onSearchQueryModified(searchQuery)
+        }
+        songs_recycler.adapter = adapter
+        songs_recycler.setHasFixedSize(true)
     }
 
     override fun onPause() {
@@ -72,6 +86,7 @@ class SearchActivity : AppCompatActivity(), Contract.View {
     }
 
     override fun displaySongs(songs: List<Song>) {
-        TODO("not implemented")
+        adapter.setSongs(songs)
     }
+
 }

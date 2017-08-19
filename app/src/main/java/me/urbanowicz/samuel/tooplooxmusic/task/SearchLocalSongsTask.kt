@@ -12,7 +12,7 @@ import me.urbanowicz.samuel.tooplooxmusic.extensions.levenshteinDistanceTo
  * The Task responsible for performing Fuzzy search algorithm on LocalRepository of songs
  * https://en.wikipedia.org/wiki/Approximate_string_matching
  */
-class SearchLocalSongsTask(@VisibleForTesting val localRepository: LocalRepository): Task<String, LocalSong> {
+class SearchLocalSongsTask(@VisibleForTesting val localRepository: LocalRepository): Task.SingleParam<String, LocalSong> {
 
     override fun execute(searchQuery: String): Flowable<LocalSong> {
         return Flowable.fromIterable(localRepository.get())

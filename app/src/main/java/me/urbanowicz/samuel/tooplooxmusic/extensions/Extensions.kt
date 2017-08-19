@@ -1,6 +1,9 @@
 package me.urbanowicz.samuel.tooplooxmusic.extensions
 
 import android.content.res.AssetManager
+import android.text.Editable
+import android.text.TextWatcher
+import android.widget.EditText
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import org.apache.commons.lang3.StringUtils
@@ -32,3 +35,19 @@ fun AssetManager.getAsString(fileName: String): String {
     stream.close()
     return json
 }
+
+fun EditText.onTextChanged(callback: (String) -> Unit) {
+    addTextChangedListener(object: TextWatcher {
+        override fun afterTextChanged(text: Editable?) {
+            callback.invoke(text.toString())
+        }
+
+        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+        }
+
+        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+        }
+
+    })
+}
+

@@ -7,16 +7,25 @@
     android:layout_height="match_parent"
     tools:context="me.urbanowicz.samuel.tooplooxmusic.screen.search.SearchActivity">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="368dp"
-        android:layout_height="56dp" >
-        <EditText
-            android:id="@+id/search_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/search" />
-    </android.support.v7.widget.Toolbar>
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="368dp"
+            android:layout_height="56dp"
+            android:focusableInTouchMode="true"
+            android:focusable="true">
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/search_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textShortMessage"
+                android:hint="@string/search" />
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/songs_recycler"
@@ -30,6 +39,6 @@
         android:layout_width="56dp"
         android:layout_height="56dp"
         android:layout_gravity="center"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
 </android.support.design.widget.CoordinatorLayout>
