@@ -22,19 +22,15 @@ class SearchPresenter(val searchLocalSongsTask: Lazy<SearchLocalSongsTask>,
     }
 
     override fun onSortBySongSelected() {
-        TODO("not implemented")
     }
 
     override fun onSortByArtistSelected() {
-        TODO("not implemented")
     }
 
     override fun onSortByDateSelected() {
-        TODO("not implemented")
     }
 
     override fun onSortDateSelected() {
-        TODO("not implemented")
     }
 
     override fun onSearchQueryModified(query: String) {
@@ -46,11 +42,9 @@ class SearchPresenter(val searchLocalSongsTask: Lazy<SearchLocalSongsTask>,
     }
 
     override fun onLocalSourceToggled(state: Boolean) {
-        TODO("not implemented")
     }
 
     override fun onRemoteSourceToggled(state: Boolean) {
-        TODO("not implemented")
     }
 
     private fun displayAllSongs() {
