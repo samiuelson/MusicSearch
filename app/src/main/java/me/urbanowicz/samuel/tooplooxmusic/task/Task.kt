@@ -4,11 +4,12 @@ import io.reactivex.Flowable
 
 interface Task {
 
-    interface SingleParam <P, R> {
+    interface DoubleParam<P1, P2, R> {
+        fun execute(param1: P1, param2: P2): Flowable<R>
+    }
+
+    interface SingleParam<P, R> {
         fun execute(param: P): Flowable<R>
     }
 
-    interface NoParam<R> {
-        fun execute(): Flowable<R>
-    }
 }
