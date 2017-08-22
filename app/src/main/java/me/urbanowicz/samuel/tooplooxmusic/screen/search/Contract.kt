@@ -12,15 +12,11 @@ interface Contract {
     interface Presenter {
         fun onViewAttached(v: View)
         fun onViewDetached()
+        fun onSearchParamsModified(query: String,
+                                   useLocalSource: Boolean,
+                                   useRemoteSource: Boolean,
+                                   sortingType: SortingType)
 
-        fun onSortBySongSelected()
-        fun onSortByArtistSelected()
-        fun onSortByDateSelected()
-        fun onSortDateSelected()
-        fun onSearchQueryModified(query: String)
-
-        fun onLocalSourceToggled(state: Boolean)
-        fun onRemoteSourceToggled(state: Boolean)
     }
 
 }

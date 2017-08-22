@@ -1,5 +1,6 @@
 package me.urbanowicz.samuel.tooplooxmusic.screen.search
 
+import android.annotation.SuppressLint
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -14,8 +15,8 @@ class SongsAdapter: RecyclerView.Adapter<SongsAdapter.ViewHolder>() {
 
     private var songs: MutableList<Song> = ArrayList<Song>()
 
+    @SuppressLint("SimpleDateFormat")
     private val format = SimpleDateFormat("dd-MM-yyyy")
-
 
     fun setSongs(songs: List<Song>) {
         this.songs.clear()
