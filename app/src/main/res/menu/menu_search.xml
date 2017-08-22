@@ -5,11 +5,13 @@
         <item
             android:id="@+id/action_local_source"
             android:checkable="true"
+            android:checked="true"
             android:title="@string/local_source" />
 
         <item
             android:id="@+id/action_remote_source"
             android:checkable="true"
+            android:checked="true"
             android:title="@string/remote_source" />
     </group>
 

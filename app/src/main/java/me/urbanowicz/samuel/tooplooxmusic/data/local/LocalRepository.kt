@@ -5,9 +5,10 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonDeserializer
 import me.urbanowicz.samuel.tooplooxmusic.data.Repository
+import me.urbanowicz.samuel.tooplooxmusic.data.Song
 import me.urbanowicz.samuel.tooplooxmusic.extensions.fromJson
 
-class LocalRepository(private val json: String): Repository<LocalSong> {
+class LocalRepository(private val json: String): Repository.Simple<Song> {
     private val TAG = "LocalRepository"
 
     private val gson: Lazy<Gson>
@@ -32,8 +33,9 @@ class LocalRepository(private val json: String): Repository<LocalSong> {
         }
     }
 
-    override fun get(): Collection<LocalSong> {
-        return gson.value.fromJson(json)
+    override fun get(): Collection<Song> {
+        val songs: Collection<LocalSong> = gson.value.fromJson(json)
+        return songs
     }
 
 }

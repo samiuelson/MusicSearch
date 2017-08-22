@@ -12,8 +12,9 @@ import me.urbanowicz.samuel.tooplooxmusic.data.local.LocalRepository
 import me.urbanowicz.samuel.tooplooxmusic.data.remote.RemoteRepository
 import me.urbanowicz.samuel.tooplooxmusic.extensions.getAsString
 import me.urbanowicz.samuel.tooplooxmusic.extensions.onTextChanged
-import me.urbanowicz.samuel.tooplooxmusic.task.GetAllSongsTask
 import me.urbanowicz.samuel.tooplooxmusic.task.SearchLocalSongsTask
+import me.urbanowicz.samuel.tooplooxmusic.task.SearchRemoteSongsTask
+import me.urbanowicz.samuel.tooplooxmusic.task.SortSongsTask
 
 class SearchActivity : AppCompatActivity(), Contract.View {
 
@@ -39,10 +40,13 @@ class SearchActivity : AppCompatActivity(), Contract.View {
         val searchLocalTaskLazy: Lazy<SearchLocalSongsTask> = lazy<SearchLocalSongsTask> {
             SearchLocalSongsTask(LocalRepository(assets.getAsString("local_songs.json")))
         }
-        val getAllSongsTaskLazy: Lazy<GetAllSongsTask> = lazy<GetAllSongsTask> {
-            GetAllSongsTask(LocalRepository(assets.getAsString("local_songs.json")), RemoteRepository())
+        val searchRemteSongsTaskLazy: Lazy<SearchRemoteSongsTask> = lazy {
+            SearchRemoteSongsTask(RemoteRepository())
         }
-        presenter = SearchPresenter(searchLocalTaskLazy, getAllSongsTaskLazy)
+        val sortSongsTaskLazy: Lazy<SortSongsTask> = lazy<SortSongsTask> {
+            SortSongsTask()
+        }
+        presenter = SearchPresenter(searchLocalTaskLazy, searchRemteSongsTaskLazy, sortSongsTaskLazy)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,17 +55,12 @@ class SearchActivity : AppCompatActivity(), Contract.View {
         setContentView(R.layout.activity_search)
         presenter.onViewAttached(this)
         setSupportActionBar(toolbar)
-        search_view.onTextChanged { searchQuery ->
-            presenter.onSearchQueryModified(searchQuery)
+        search_view.onTextChanged {
+            notifyPresenter()
         }
         songs_recycler.adapter = adapter
-        songs_recycler.setHasFixedSize(true)
 
         this.savedInstanceState = savedInstanceState
-    }
-
-    override fun onResume() {
-        super.onResume()
     }
 
     override fun onPause() {
@@ -82,42 +81,43 @@ class SearchActivity : AppCompatActivity(), Contract.View {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_search, menu)
 
-        this.menuItemLocalSource = menu?.findItem(R.id.action_local_source)
-        this.menuItemRemoteSource = menu?.findItem(R.id.action_remote_source)
-        this.menuItemSortSong = menu?.findItem(R.id.action_sort_by_name)
-        this.menuItemSortArtist = menu?.findItem(R.id.action_sort_by_artist)
-        this.menuItemSortDate = menu?.findItem(R.id.action_sort_by_date)
+        menuItemLocalSource = menu?.findItem(R.id.action_local_source)
+        menuItemRemoteSource = menu?.findItem(R.id.action_remote_source)
+        menuItemSortSong = menu?.findItem(R.id.action_sort_by_name)
+        menuItemSortArtist = menu?.findItem(R.id.action_sort_by_artist)
+        menuItemSortDate = menu?.findItem(R.id.action_sort_by_date)
 
         updateStateOfMenuItems()
+        notifyPresenter()
 
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when(item?.itemId) {
+        when (item?.itemId) {
             R.id.action_local_source -> {
                 item.isChecked = !item.isChecked
-                presenter.onLocalSourceToggled(item.isChecked)
+                notifyPresenter()
                 return true
             }
             R.id.action_remote_source -> {
                 item.isChecked = !item.isChecked
-                presenter.onRemoteSourceToggled(item.isChecked)
+                notifyPresenter()
                 return true
             }
             R.id.action_sort_by_date -> {
                 item.isChecked = !item.isChecked
-                presenter.onSortByDateSelected()
+                notifyPresenter()
                 return true
             }
             R.id.action_sort_by_name -> {
                 item.isChecked = !item.isChecked
-                presenter.onSortBySongSelected()
+                notifyPresenter()
                 return true
             }
             R.id.action_sort_by_artist -> {
                 item.isChecked = !item.isChecked
-                presenter.onSortByArtistSelected()
+                notifyPresenter()
                 return true
             }
             else -> {
@@ -133,6 +133,33 @@ class SearchActivity : AppCompatActivity(), Contract.View {
             menuItemSortSong?.isChecked = savedInstanceState!!.getBoolean(constants.KEY_SORT_BY_SONG, false)
             menuItemSortArtist?.isChecked = savedInstanceState!!.getBoolean(constants.KEY_SORT_BY_ARTIST, false)
             menuItemSortDate?.isChecked = savedInstanceState!!.getBoolean(constants.KEY_SORT_BY_DATE, false)
+        }
+    }
+
+    private fun notifyPresenter() {
+        val sortType: SortingType
+        if (parseBoolean(menuItemSortSong?.isChecked)) {
+            sortType = SortingType.BY_SONG
+        } else if (parseBoolean(menuItemSortArtist?.isChecked)) {
+            sortType = SortingType.BY_ARTIST
+        } else if (parseBoolean(menuItemSortDate?.isChecked)) {
+            sortType = SortingType.BY_DATE
+        } else {
+            sortType = SortingType.DEFAULT
+        }
+
+        presenter.onSearchParamsModified(
+                search_view.text.toString(),
+                parseBoolean(menuItemLocalSource?.isChecked),
+                parseBoolean(menuItemRemoteSource?.isChecked),
+                sortType)
+    }
+
+    private fun parseBoolean(value: Boolean?): Boolean {
+        if (value != null) {
+            return value
+        } else {
+            return false
         }
     }
 
