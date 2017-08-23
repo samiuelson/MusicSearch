@@ -24,6 +24,7 @@ class SearchActivity : AppCompatActivity(), Contract.View {
         val KEY_SORT_BY_SONG = "song"
         val KEY_SORT_BY_ARTIST = "artist"
         val KEY_SORT_BY_DATE = "release_date"
+        val KEY_SORT_BY_DEFAULT = "default"
     }
 
     private val presenter: Contract.Presenter
@@ -34,6 +35,7 @@ class SearchActivity : AppCompatActivity(), Contract.View {
     private var menuItemSortSong: MenuItem? = null
     private var menuItemSortArtist: MenuItem? = null
     private var menuItemSortDate: MenuItem? = null
+    private var menuItemSortDefault: MenuItem? = null
     private var savedInstanceState: Bundle? = null
 
     init {
@@ -86,6 +88,7 @@ class SearchActivity : AppCompatActivity(), Contract.View {
         menuItemSortSong = menu?.findItem(R.id.action_sort_by_name)
         menuItemSortArtist = menu?.findItem(R.id.action_sort_by_artist)
         menuItemSortDate = menu?.findItem(R.id.action_sort_by_date)
+        menuItemSortDefault = menu?.findItem(R.id.action_sort_default)
 
         updateStateOfMenuItems()
         notifyPresenter()
@@ -120,6 +123,11 @@ class SearchActivity : AppCompatActivity(), Contract.View {
                 notifyPresenter()
                 return true
             }
+            R.id.action_sort_default -> {
+                item.isChecked = !item.isChecked
+                notifyPresenter()
+                return true
+            }
             else -> {
                 return super.onOptionsItemSelected(item)
             }
@@ -133,6 +141,7 @@ class SearchActivity : AppCompatActivity(), Contract.View {
             menuItemSortSong?.isChecked = savedInstanceState!!.getBoolean(constants.KEY_SORT_BY_SONG, false)
             menuItemSortArtist?.isChecked = savedInstanceState!!.getBoolean(constants.KEY_SORT_BY_ARTIST, false)
             menuItemSortDate?.isChecked = savedInstanceState!!.getBoolean(constants.KEY_SORT_BY_DATE, false)
+            menuItemSortDefault?.isChecked = savedInstanceState!!.getBoolean(constants.KEY_SORT_BY_DEFAULT, false)
         }
     }
 

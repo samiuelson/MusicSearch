@@ -29,6 +29,10 @@
             android:id="@+id/action_sort_by_date"
             android:title="@string/sort_by_year" />
 
+        <item
+            android:id="@+id/action_sort_default"
+            android:title="@string/sort_default" />
+
     </group>
 
 </menu>
