@@ -32,7 +32,7 @@ class SearchPresenter(val searchLocalSongsTask: Lazy<SearchLocalSongsTask>,
     override fun onSearchParamsModified(query: String,
                                         useLocalSource: Boolean,
                                         useRemoteSource: Boolean,
-                                        sortingType: SortingType) {
+                                        sortType: SortType) {
         view?.displaySongs(emptyList())
         view?.setProgressbarVisibility(true)
 
@@ -49,7 +49,7 @@ class SearchPresenter(val searchLocalSongsTask: Lazy<SearchLocalSongsTask>,
             view?.displaySongs(emptyList())
         }
 
-        displaySongs(sortSongsTask.value.execute(songs, sortingType))
+        displaySongs(sortSongsTask.value.execute(songs, sortType))
     }
 
     private fun displaySongs(songs: Flowable<Song>) {

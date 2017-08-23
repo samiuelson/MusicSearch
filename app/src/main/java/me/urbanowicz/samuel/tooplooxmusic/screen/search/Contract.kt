@@ -15,7 +15,7 @@ interface Contract {
         fun onSearchParamsModified(query: String,
                                    useLocalSource: Boolean,
                                    useRemoteSource: Boolean,
-                                   sortingType: SortingType)
+                                   sortType: SortType)
 
     }
 

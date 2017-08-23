@@ -146,15 +146,15 @@ class SearchActivity : AppCompatActivity(), Contract.View {
     }
 
     private fun notifyPresenter() {
-        val sortType: SortingType
+        val sortType: SortType
         if (parseBoolean(menuItemSortSong?.isChecked)) {
-            sortType = SortingType.BY_SONG
+            sortType = SortType.BY_SONG
         } else if (parseBoolean(menuItemSortArtist?.isChecked)) {
-            sortType = SortingType.BY_ARTIST
+            sortType = SortType.BY_ARTIST
         } else if (parseBoolean(menuItemSortDate?.isChecked)) {
-            sortType = SortingType.BY_DATE
+            sortType = SortType.BY_DATE
         } else {
-            sortType = SortingType.DEFAULT
+            sortType = SortType.DEFAULT
         }
 
         presenter.onSearchParamsModified(
