@@ -18,6 +18,11 @@
     <group android:checkableBehavior="single">
 
         <item
+            android:id="@+id/action_sort_default"
+            android:title="@string/sort_default"
+            android:checked="true"/>
+
+        <item
             android:id="@+id/action_sort_by_name"
             android:title="@string/sort_by_song" />
 
@@ -28,10 +33,6 @@
         <item
             android:id="@+id/action_sort_by_date"
             android:title="@string/sort_by_year" />
-
-        <item
-            android:id="@+id/action_sort_default"
-            android:title="@string/sort_default" />
 
     </group>
 

@@ -7,8 +7,11 @@ import me.urbanowicz.samuel.tooplooxmusic.screen.search.SortingType
 class SortSongsTask: Task.DoubleParam<Flowable<Song>, SortingType, Song> {
 
     override fun execute(songsStream: Flowable<Song>, sortType: SortingType): Flowable<Song> {
-        return songsStream
-                .sorted(getComparator(sortType))
+        if (SortingType.DEFAULT == sortType) {
+            return songsStream
+        } else {
+            return songsStream.sorted(getComparator(sortType))
+        }
     }
 
     private fun getComparator(sortType: SortingType): (s1: Song, s2: Song) -> Int {
