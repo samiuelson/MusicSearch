@@ -1,5 +1,6 @@
 package me.urbanowicz.samuel.tooplooxmusic.data.local
 
+import android.support.annotation.VisibleForTesting
 import android.util.Log
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonDeserializer
@@ -7,7 +8,8 @@ import me.urbanowicz.samuel.tooplooxmusic.data.Repository
 import me.urbanowicz.samuel.tooplooxmusic.data.Song
 import me.urbanowicz.samuel.tooplooxmusic.extensions.fromJson
 
-class LocalRepository(private val json: String): Repository.Simple<Song> {
+@VisibleForTesting
+open class LocalRepository(private val json: String): Repository.Simple<Song> {
     private val TAG = "LocalRepository"
 
     private val songs: Lazy<Collection<Song>>

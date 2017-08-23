@@ -5,7 +5,7 @@ import io.reactivex.Flowable
 import me.urbanowicz.samuel.tooplooxmusic.data.Song
 import me.urbanowicz.samuel.tooplooxmusic.data.local.LocalRepository
 
-class SearchLocalSongsTask(@VisibleForTesting val localRepository: LocalRepository): Task.SingleParam<String, Song> {
+class SearchLocalSongsTask(val localRepository: LocalRepository): Task.SingleParam<String, Song> {
 
     override fun execute(searchQuery: String): Flowable<Song> {
         val queryEmpty = searchQuery.isNullOrEmpty()
