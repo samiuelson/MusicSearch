@@ -1,5 +1,6 @@
 package me.urbanowicz.samuel.tooplooxmusic.screen.search
 
+import android.support.annotation.VisibleForTesting
 import android.util.Log
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -10,13 +11,14 @@ import me.urbanowicz.samuel.tooplooxmusic.task.SearchLocalSongsTask
 import me.urbanowicz.samuel.tooplooxmusic.task.SearchRemoteSongsTask
 import me.urbanowicz.samuel.tooplooxmusic.task.SortSongsTask
 
-class SearchPresenter(val searchLocalSongsTask: Lazy<SearchLocalSongsTask>,
-                      val searchRemoteSongsTask: Lazy<SearchRemoteSongsTask>,
-                      val sortSongsTask: Lazy<SortSongsTask>) : Contract.Presenter {
+@VisibleForTesting
+open class SearchPresenter(val searchLocalSongsTask: Lazy<SearchLocalSongsTask>,
+                                                 val searchRemoteSongsTask: Lazy<SearchRemoteSongsTask>,
+                                                 val sortSongsTask: Lazy<SortSongsTask>) : Contract.Presenter {
 
     private val TAG = "SearchPresenter"
 
-    private var view: Contract.View? = null
+    @VisibleForTesting var view: Contract.View? = null
 
     private var disposables: CompositeDisposable = CompositeDisposable()
 
@@ -52,7 +54,8 @@ class SearchPresenter(val searchLocalSongsTask: Lazy<SearchLocalSongsTask>,
         displaySongs(sortSongsTask.value.execute(songs, sortType))
     }
 
-    private fun displaySongs(songs: Flowable<Song>) {
+    @VisibleForTesting
+    fun displaySongs(songs: Flowable<Song>) {
         val disposable =
                 songs
                     .subscribeOn(Schedulers.io())
